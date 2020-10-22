@@ -1,0 +1,6 @@
+dist
+test
+.vscode
+.github
+/node_modules
+tsconfig.tsbuildinfo

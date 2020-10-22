@@ -1,0 +1,58 @@
+{
+  "name": "boilerplate-typescript-fastify-clean-architecture",
+  "version": "1.0.0",
+  "description": "Template for starting backend with typescript + fastify + clean architecture",
+  "main": "dist/server.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "dev": "NODE_ENV=development nodemon --watch 'src/**/*.ts' --exec 'ts-node' src/server.ts",
+    "start:production": "NODE_ENV=production node dist/server.js",
+    "start:staging": "NODE_ENV=staging node dist/server.js",
+    "build": "tsc --listEmittedFiles ",
+    "test": "NODE_ENV=development jest --watchAll --coverage --config 'jest.config.js'",
+    "test:github-action": "NODE_ENV=development jest --coverage --config 'jest.config.js'",
+    "test:postman": "make postman-test-api"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aslupin/boilerplate-typescript-fastify-clean-architecture.git"
+  },
+  "author": "poonsht",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aslupin/boilerplate-typescript-fastify-clean-architecture/issues"
+  },
+  "homepage": "https://github.com/aslupin/boilerplate-typescript-fastify-clean-architecture#readme",
+  "dependencies": {
+    "@sentry/node": "^5.15.5",
+    "@types/amqplib": "^0.5.13",
+    "amqplib": "^0.5.6",
+    "axios": "^0.19.2",
+    "config-yaml": "^1.1.4",
+    "dotenv": "^8.2.0",
+    "fastify": "^3.7.0",
+    "mongoose": "^5.9.10",
+    "ts-node": "^8.9.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/body-parser": "^1.19.0",
+    "@types/config-yaml": "^1.1.1",
+    "@types/jest": "^25.2.1",
+    "@types/mongoose": "^5.7.14",
+    "@types/node": "^13.13.4",
+    "babel-jest": "^26.0.0",
+    "jest": "^26.0.0",
+    "mock-express-response": "^0.2.2",
+    "newman": "^5.0.1",
+    "nodemon": "^2.0.3",
+    "typescript": "^3.9.3"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/config/config.ts"
+    ]
+  }
+}

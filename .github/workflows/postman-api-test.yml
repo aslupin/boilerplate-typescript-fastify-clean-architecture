@@ -1,0 +1,25 @@
+name: Postman - APIs Test with newman-cli
+
+on:
+  push:
+    branches:
+      - staging
+
+jobs:
+  test:
+    name: APIs Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Building APIs
+        run: pwd && ls -al && docker-compose up -d
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Install newman
+        run: npm install -g newman
+      - name: Waiting APIs launched
+        run: make pm-github-action
+      - name: Run newman
+        run: make postman-test-api

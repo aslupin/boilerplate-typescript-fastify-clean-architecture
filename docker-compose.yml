@@ -1,0 +1,50 @@
+version: "3.1"
+services:
+  boilerplate-typescript-fastify-clean-architecture:
+    container_name: boilerplate-typescript-fastify-clean-architecture
+    image: boilerplate-typescript-fastify-clean-architecture:v1
+    build:
+      context: ./
+      dockerfile: ./docker/prod.Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongo
+      # - rabbitmq
+    # command: sh -c "dockerize -wait tcp://mongo:27017 -wait tcp://rabbitmq:5672 -timeout 300s -wait-retry-interval 30s npm start"
+    command: sh -c "dockerize -wait tcp://mongo:27017 -timeout 300s -wait-retry-interval 30s npm run start:production"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
+    labels:
+      kompose.service.type: LoadBalancer
+
+  # rabbitmq:
+  #   container_name: rabbitmq
+  #   image: rabbitmq:management
+  #   ports:
+  #     - "15672:15672"
+  #     - "5672:5672"
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "50m"
+  #       max-file: "10"
+
+  mongo:
+    container_name: mongo
+    image: mongo:4.0
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=database
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "10"
