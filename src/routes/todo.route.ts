@@ -14,6 +14,7 @@ class TodoRoutes {
         const data = await TodoUsecase.findAllTodo()
         return data
       }, reply)
+      await reply
     })
 
     fastify.post(`/create`, async (request, reply) => {
@@ -28,6 +29,7 @@ class TodoRoutes {
         const data = await TodoUsecase.createTodo(reqCreate)
         return data
       }, reply)
+      await reply
     })
 
     fastify.put(`/update`,async (request, reply) => {
@@ -47,6 +49,7 @@ class TodoRoutes {
         const data = await TodoUsecase.updateTodo(reqUpdate)
         return data
       }, reply)
+      await reply
     })
 
     fastify.delete(`/delete`, async (request, reply) => {
@@ -54,6 +57,7 @@ class TodoRoutes {
         const data = await TodoUsecase.deleteTodo(request.body as deleteDTO)
         return data
       }, reply)
+      await reply
     })
 
   }
