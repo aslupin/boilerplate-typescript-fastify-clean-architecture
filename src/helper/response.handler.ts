@@ -4,7 +4,7 @@ import { ResponseInterface } from '../entities/interfaces/data/response.interfac
 import errorHandler from './errors.handler'
 import parseResponse from './response.parser'
 
-const responseSender = async (data: ResponseInterface, reply: FastifyReply): Promise<void> => {
+export const responseSender = async (data: ResponseInterface, reply: FastifyReply): Promise<void> => {
   await errorHandler.reply(data, reply)
   reply.send(data)
 }

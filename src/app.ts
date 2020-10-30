@@ -5,7 +5,8 @@ import RabbitMQAdapter from './adapters/rabbitmq.adapter'
 
 class App {
   public app: FastifyInstance
-  public portApp: number = parseInt(`${config.app.port}`, 10) ?? 8080
+  public app_domain: string = config.app.domain
+  public app_port: number = parseInt(`${config.app.port}`, 10) ?? 8080
 
   private databaseInfo = {
     username: config.db.mongo.username!,
@@ -23,13 +24,12 @@ class App {
     port: parseInt(`${config.queue.connection.port}`, 10) ?? 5672,
   }
 
-  constructor(appInit: { middleWares: { before: any; after: any }; routes: any }) {
+  constructor(appInit: { plugins: any; routes: any }) {
     this.app = fastify({ logger: true })
     // this.connectQueue()
     this.connectDatabase()
-    // this.middlewares(appInit.middleWares.before)
+    this.register(appInit.plugins)
     this.routes(appInit.routes)
-    // this.middlewares(appInit.middleWares.after)
   }
 
   private async connectDatabase() {
@@ -41,11 +41,11 @@ class App {
     await RabbitMQAdapter.getInstance(this.queueInfo)
   }
 
-  // private middlewares(middleWares: { forEach: (arg0: (middleWare: any) => void) => void }) {
-  //   middleWares.forEach((middleWare) => {
-  //     this.app.register(middleWare)
-  //   })
-  // }
+  private register(plugins: { forEach: (arg0: (plugin: any) => void) => void }) {
+    plugins.forEach((plugin) => {
+      this.app.register(plugin)
+    })
+  }
 
   public routes(routes: { forEach: (arg0: (routes: any) => void) => void }) {
     routes.forEach((route) => {
@@ -57,8 +57,8 @@ class App {
   }
 
   public listen() {
-    this.app.listen(this.portApp, () => {
-      console.log(`App listening on the http://localhost:${this.portApp}`)
+    this.app.listen(this.app_port, () => {
+      console.log(`App listening on the http://${this.app_domain}:${this.app_port} 🌟👻`)
     })
   }
 }

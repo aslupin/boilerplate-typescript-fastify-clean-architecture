@@ -1,6 +1,23 @@
 app:
+  domain: localhost
   kind: development
   port: 8080
+
+jwt:
+  confirm_email:
+    secret:
+      jwt_secret: emailconfirm
+    options:
+      expires_in: 14hr
+      issuer: poonsht
+      audience: poonsht
+  private_route:
+    secret:
+      jwt_secret: privateroute
+    options:
+      expires_in: 30d
+      issuer: poonsht
+      audience: poonsht
 
 db:
   mongo:
